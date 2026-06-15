@@ -1,4 +1,4 @@
-# emergent-geometry-heisenberg
+# entanglement-spatial-emergence
 
 Numerical exact diagonalisation protocols and spectral graph theory pipelines for extracting smooth spatial differential operators directly from the entanglement structure of pure quantum ground states.
 
