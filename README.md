@@ -18,7 +18,7 @@ The resulting operator naturally satisfies the definition of a continuous one-di
 
 * `main.tex`: Full publication-ready LaTeX source file.
 * `main.pdf`: Compiled, high-resolution six-page pre-print layout.
-* `numerical.py`: Self-contained Python implementation script utilizing exact ground-state diagonalisation.
+* `/code`: Self-contained Python implementation script.
 * `/output`: Output spectral plots showing eigenmode wavefunctions, quadratic fits, finite-size scaling, and the relational mutual-information heat map.
 
 ---
