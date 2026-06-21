@@ -12,27 +12,26 @@
 \date{June 21, 2026}
 
 \begin{abstract}
-We present a fully numerical, model-independent demonstration that smooth
-spatial geometry can emerge directly from the entanglement structure of a pure
-quantum state, without any a priori geometric assumptions. Using exact
-diagonalization of the isotropic antiferromagnetic Heisenberg spin chain, we
-compute the ground-state mutual-information matrix and construct its associated
-graph Laplacian. A comprehensive suite of spectral and statistical diagnostics
----including AICc model selection, extended finite-size scaling, bootstrap
-analysis, boundary-slope metrics, synthetic Laplacian benchmarking, and
-mutual-information decay exponents---shows that the information-derived
-operator exhibits the defining signatures of a one-dimensional Laplace--Beltrami
-operator with Neumann boundary conditions.
+We present a fully numerical and model-independent demonstration that smooth
+geometric structure can arise directly from the entanglement pattern of a pure
+quantum state. Using exact diagonalization of the isotropic antiferromagnetic
+Heisenberg spin chain, we compute the ground-state mutual-information matrix
+and construct from it a graph Laplacian. A broad suite of diagnostics—
+including AICc model selection, extended finite-size scaling, bootstrap
+analysis, boundary-slope measurements, synthetic Laplacian benchmarking, and
+mutual-information decay exponents—shows that the resulting operator exhibits
+the characteristic features of a one-dimensional Laplace--Beltrami operator
+with Neumann boundary conditions.
 
-Our strongest quantitative result is a robust match between the measured
-mutual-information decay exponent and the analytic Luttinger-liquid prediction
-across the XXZ critical line. The lowest Laplacian eigenvalue $\lambda_1$
-exhibits a statistically significant finite-size intercept under open boundary
-conditions (OBC), and this intercept becomes larger under periodic boundary
-conditions (PBC). This demonstrates that the mass scale is a genuine bulk
-property of the entanglement geometry rather than a boundary artefact. These
-results provide a concrete numerical pipeline for validating information-
-theoretic approaches to quantum gravity.
+A key quantitative result is the strong agreement between the measured
+mutual-information decay exponent and the Luttinger-liquid prediction across
+the XXZ critical line. The lowest Laplacian eigenvalue $\lambda_1$ displays a
+statistically significant finite-size intercept under open boundary conditions
+(OBC), and this intercept increases under periodic boundary conditions (PBC).
+This behaviour demonstrates that the mass scale is a genuine bulk property of
+the entanglement geometry rather than a boundary artefact. The numerical
+pipeline developed here provides a concrete validation tool for
+information-theoretic approaches to emergent geometry.
 \end{abstract}
 
 \maketitle
@@ -41,18 +40,18 @@ theoretic approaches to quantum gravity.
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A central idea in modern quantum gravity is that spacetime geometry is not
-fundamental, but emerges from structured patterns of quantum entanglement.
-This viewpoint appears in holographic dualities, tensor-network constructions,
-and quantum error-correcting codes, yet explicit numerical demonstrations in
-microscopic many-body systems remain scarce.
+A central theme in modern quantum gravity is that spacetime geometry may not be
+fundamental, but instead emerges from structured patterns of quantum
+entanglement. This idea appears in holographic dualities, tensor-network
+constructions, and quantum error-correcting codes, yet explicit numerical
+demonstrations in microscopic many-body systems remain limited.
 
-Here we treat the ground state of a simple quantum many-body system---the
-isotropic antiferromagnetic Heisenberg spin chain---as a raw relational
-dataset. From its mutual-information structure alone, we construct a graph
-Laplacian and analyze its spectral properties. We ask whether this operator
+In this work we treat the ground state of a simple quantum many-body system—the
+isotropic antiferromagnetic Heisenberg spin chain—as a relational dataset. From
+its mutual-information structure alone, we construct a graph Laplacian and
+examine its spectral properties. Our goal is to determine whether this operator
 behaves like a continuum Laplace--Beltrami operator on a one-dimensional
-manifold with Neumann boundary conditions, and how this behaviour changes
+manifold with Neumann boundary conditions, and how this behaviour evolves
 between critical and gapped phases.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,7 +60,7 @@ between critical and gapped phases.
 
 \subsection{Hamiltonian and ground state}
 
-We consider the open XXZ chain
+We study the XXZ Hamiltonian
 \begin{equation}
 H = J \sum_{i=1}^{N-1}
 \left(
@@ -76,11 +75,11 @@ regime $(-1<\Delta\leq 1)$ and for selected gapped points $\Delta>1$.
 
 \subsection{Mutual-information matrix}
 
-For each site $i$ we define the reduced density matrix
+For each site $i$ we compute the reduced density matrix
 $\rho_i = \mathrm{Tr}_{\bar{i}} \lvert \psi_0\rangle\langle\psi_0\rvert$, and for
-each pair $(i,j)$ we define
+each pair $(i,j)$ we compute
 $\rho_{ij} = \mathrm{Tr}_{\overline{ij}} \lvert \psi_0\rangle\langle\psi_0\rvert$.
-The von Neumann entropies give the mutual information
+The mutual information is then
 \begin{equation}
 I(i,j) = S(\rho_i) + S(\rho_j) - S(\rho_{ij}).
 \end{equation}
@@ -91,7 +90,7 @@ We define a normalized adjacency matrix
 \begin{equation}
 A_{ij} = \frac{I(i,j)}{\max_{k,\ell} I(k,\ell)},\qquad A_{ii}=0,
 \end{equation}
-and the associated graph Laplacian $L = D - A$ with $D_{ii}=\sum_j A_{ij}$.
+and construct the graph Laplacian $L = D - A$ with $D_{ii}=\sum_j A_{ij}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results}
@@ -108,19 +107,16 @@ gradients, consistent with Neumann boundary conditions.
 \centering
 \includegraphics[width=\linewidth]{test1_zero_mode_boundary_open.png}
 \caption{Eigenmodes of the information-derived Laplacian for $N=12$ at
-$\Delta=1$ (open boundaries). The site index runs from $0$ to $11$ in the
-underlying Python code; the plotted range reflects the discrete sampling of
-$N=12$ sites.}
+$\Delta=1$ (open boundaries).}
 \end{figure}
 
 \subsection{Dispersion and model selection}
 
 For $N=12$, fitting the lowest eight nonzero eigenvalues $\lambda_k$ as a
 function of mode index $k$ yields $R^2\approx 0.95$ for both linear and
-quadratic fits, but AICc prefers the linear model. Pooling data across
-$N=6,8,10,12,14,16,18$ also favours a linear model with $R^2\approx 0.61$.
-Thus the spectrum is smooth and monotonic, but the accessible sizes do not
-support a clean quadratic dispersion claim.
+quadratic fits, but AICc favours the linear model. Pooling data across
+$N=6,8,10,12,14,16,18$ also supports a linear trend, though the accessible
+sizes do not permit a definitive statement about quadratic dispersion.
 
 \subsection{Finite-size scaling of $\lambda_1$ under OBC}
 
@@ -137,8 +133,8 @@ a $13.3\sigma$ nonzero intercept.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test3_finite_size_scaling_open.png}
-\caption{Finite-size scaling of $\lambda_1$ across $N=6,8,10,12,14,16,18$
-(open boundaries). The linear fit in $1/N^2$ yields a nonzero intercept.}
+\caption{Finite-size scaling of $\lambda_1$ across $N=6$–$18$ (open
+boundaries).}
 \end{figure}
 
 A bootstrap over system sizes yields $b=0.1396\pm0.0148$ ($9.4\sigma$).
@@ -146,11 +142,17 @@ A bootstrap over system sizes yields $b=0.1396\pm0.0148$ ($9.4\sigma$).
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test3c_bootstrap_intercept_open.png}
-\caption{Bootstrap distribution of the $\lambda_1$ intercept using the
-extended size set $N=6,8,10,12,14,16,18$ (open boundaries).}
+\caption{Bootstrap distribution of the $\lambda_1$ intercept (open
+boundaries).}
 \end{figure}
 
 \subsection{Synthetic Neumann benchmark (OBC)}
+
+To assess whether the information-derived Laplacian reproduces the expected
+continuum behaviour under open boundaries, we compare its spectrum to that of
+an ideal discrete Neumann Laplacian on a chain of the same length. The lowest
+modes show close agreement, while higher modes deviate due to short-distance
+renormalization effects.
 
 \begin{figure}[t]
 \centering
@@ -161,33 +163,37 @@ discrete Neumann Laplacian for $N=12$ (open boundaries).}
 
 \subsection{Mutual-information decay exponent vs Luttinger theory (OBC)}
 
+We extract the mutual-information decay exponent along the XXZ critical line
+and compare it to the Luttinger-liquid prediction. The measured exponents track
+the theoretical values with high correlation, confirming that the MI-derived
+geometry captures the correct continuum scaling structure.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test6_MI_decay_vs_theory_open.png}
-\caption{Measured vs.\ predicted mutual-information decay exponents across
-the XXZ critical line for $N=12$ (open boundaries).}
+\caption{Measured vs.\ predicted mutual-information decay exponents (open
+boundaries).}
 \end{figure}
 
 \subsection{Critical vs gapped substrates: localization and collapse (OBC)}
+
+Localization is quantified using the inverse participation ratio (IPR). In the
+critical regime the lowest modes remain extended, while in the gapped phase
+they become localized, signalling the collapse of geometric structure.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test4_criticality_ipr_open.png}
 \caption{Localization (IPR) vs.\ anisotropy $\Delta$ for $N=12$ (open
-boundaries). In the gapped phase, eigenmodes localize and geometric structure
-collapses.}
+boundaries).}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Periodic-boundary predictions and results}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-To determine whether the finite $\lambda_1$ intercept originates from boundary
-distortions, we repeated the full analysis under periodic boundary conditions
-(PBC). Under PBC the MI graph becomes translationally invariant and boundary
-operators are absent.
-
-We find
+Under periodic boundaries the MI graph becomes translationally invariant and
+boundary operators are absent. Fitting the lowest eigenvalue yields
 \begin{equation}
 \lambda_1(N)
 = \frac{52.52\pm5.83}{N^2} + (1.170\pm0.077),
@@ -197,54 +203,62 @@ a $15.2\sigma$ nonzero intercept.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test3_finite_size_scaling_periodic.png}
-\caption{Finite-size scaling of $\lambda_1$ under periodic boundaries. The
-intercept remains nonzero and is larger than in the open case.}
+\caption{Finite-size scaling of $\lambda_1$ under periodic boundaries.}
 \end{figure}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test3c_bootstrap_intercept_periodic.png}
-\caption{Bootstrap distribution of the $\lambda_1$ intercept under periodic
-boundaries.}
+\caption{Bootstrap distribution of the $\lambda_1$ intercept (periodic
+boundaries).}
 \end{figure}
 
-The intercept is therefore \emph{larger} under PBC than under OBC, indicating a
-bulk mass scale rather than a boundary artefact.
-
 \subsection{Eigenmodes under PBC}
+
+Under periodic boundaries the first two nonzero eigenmodes form a degenerate
+pair, consistent with the plane-wave structure of a ring Laplacian.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test1_zero_mode_boundary_periodic.png}
-\caption{Eigenmodes of the MI-derived Laplacian under periodic boundaries.
-The $k=1,2$ degeneracy characteristic of a ring Laplacian is visible.}
+\caption{Eigenmodes of the MI-derived Laplacian under periodic boundaries.}
 \end{figure}
 
 \subsection{MI decay exponent under PBC}
 
+The MI-decay exponent remains strongly correlated with Luttinger-liquid
+predictions under PBC, though the measured slopes are slightly less negative
+due to the more uniform MI graph.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test6_MI_decay_vs_theory_periodic.png}
-\caption{Measured vs.\ predicted MI decay exponents under periodic
-boundaries.}
+\caption{Measured vs.\ predicted MI decay exponents (periodic boundaries).}
 \end{figure}
 
 \subsection{Localization under PBC}
 
+All eigenmodes remain delocalised with IPR $=1/N$ for all anisotropies,
+confirming the absence of boundary-induced distortions under PBC.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test4_criticality_ipr_periodic.png}
-\caption{Localization (IPR) under periodic boundaries. All modes remain
-delocalised with IPR $=1/N$.}
+\caption{Localization (IPR) under periodic boundaries.}
 \end{figure}
 
 \subsection{Synthetic periodic ring benchmark (PBC)}
 
+To benchmark the periodic-boundary spectrum, we compare it to the ideal
+periodic ring Laplacian. The MI-derived operator reproduces the expected
+degeneracy structure but is shifted upward, consistent with an
+entanglement-induced mass term.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{test8_synthetic_neumann_spectrum_periodic.png}
-\caption{Spectrum comparison under periodic boundaries between the
-MI-derived Laplacian and an ideal periodic ring Laplacian.}
+\caption{Spectrum comparison between the MI-derived Laplacian and an ideal
+periodic ring Laplacian.}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -254,22 +268,18 @@ MI-derived Laplacian and an ideal periodic ring Laplacian.}
 Our numerical pipeline shows that a Laplacian-like operator constructed purely
 from ground-state mutual information exhibits many of the defining features of
 a continuum Laplace--Beltrami operator on a one-dimensional interval with
-Neumann boundary conditions.
+Neumann boundary conditions. The extended-$N$ analysis of $\lambda_1$ reveals a
+statistically robust finite-size intercept under OBC. The decisive test is the
+behaviour under periodic boundaries: if the intercept were a boundary artefact,
+it would vanish under PBC. Instead, the intercept becomes larger and more
+statistically significant.
 
-The extended-$N$ analysis of $\lambda_1$ reveals a statistically robust
-finite-size intercept under OBC. The decisive test is the behaviour under
-periodic boundaries. If the intercept were a boundary artefact, it would
-vanish under PBC. Instead, the intercept becomes larger and more statistically
-significant.
-
-The nearly order-of-magnitude increase from
-$b_{\mathrm{OBC}}\approx 0.145$ to $b_{\mathrm{PBC}}\approx 1.17$ reflects the
-fact that removing boundaries forces long-range entanglement monogamy
-constraints to be distributed around a closed loop, thickening the effective
-information gap and enhancing the emergent mass scale. The MI-derived
-Laplacian therefore describes a genuinely massive one-dimensional geometry
-whose mass gap persists in the thermodynamic limit and is robust to changes in
-topology.
+The increase from $b_{\mathrm{OBC}}\approx 0.145$ to $b_{\mathrm{PBC}}\approx
+1.17$ reflects the redistribution of long-range entanglement monogamy
+constraints around a closed loop, thickening the effective information gap and
+enhancing the emergent mass scale. The MI-derived Laplacian therefore describes
+a genuinely massive one-dimensional geometry whose mass gap persists in the
+thermodynamic limit and is robust to changes in topology.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
@@ -279,9 +289,9 @@ We have provided a comprehensive, statistically controlled numerical
 demonstration that differential-geometric structure can emerge from quantum
 entanglement alone in a simple spin chain. The persistence and enhancement of
 the $\lambda_1$ intercept under periodic boundaries shows that the emergent
-geometry contains a genuine bulk mass scale. The pipeline developed here
-offers a concrete validation tool for information-theoretic approaches to
-emergent geometry and suggests several directions for follow-up: extending to
+geometry contains a genuine bulk mass scale. The pipeline developed here offers
+a concrete validation tool for information-theoretic approaches to emergent
+geometry and suggests several directions for follow-up, including extending to
 larger $N$ using DMRG or MPS, applying the MI-to-Laplacian construction to
 higher-dimensional systems, and exploring connections to holographic and
 tensor-network models of emergent spacetime.
