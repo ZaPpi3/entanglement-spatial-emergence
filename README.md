@@ -59,7 +59,7 @@ The construction is sensitive to **universal CFT data**, not just microscopic de
 *   **`main.tex`**: Contains the raw LaTeX source text, document preambles, and bibliography tags.
     *   `main.tex`: The unified, consolidated TeX source file ready for local compilation or direct upload to the arXiv production servers.
 *   **`code/`**: The complete Python implementation of the numerical models supporting the theoretical framework.
-    *   `numerical_test.py`
+    *   `testing.py`
 *   **`output/`**: test output .png files.
 
 ---
