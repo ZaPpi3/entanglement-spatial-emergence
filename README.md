@@ -1,21 +1,35 @@
-# Emergent Geometry from Entanglement
+# Emergent Geometry from Entanglement: A Numerical Demonstration Using Heisenberg Spin Chains
 
-### A Numerical Demonstration Using Heisenberg Spin Chains
+[![Paper Link](https://shields.io)](https://arxiv.org)
+[![License: MIT](https://shields.io)](https://opensource.org)
 
-This repository contains the full numerical pipeline used in the paper:
-**“Emergent Geometry from Entanglement: A Numerical Demonstration Using Heisenberg Spin Chains” (2026)**
+Official repository for the paper **“Emergent Geometry from Entanglement: A Numerical Demonstration Using Heisenberg Spin Chains” (2026)** by Paul Jarvis. This work presents a numerical pipeline demonstrating how spatial geometry emerges from quantum entanglement in Heisenberg spin chains, without prior assumptions.
 
-## 🔍 Overview
-We study the isotropic antiferromagnetic Heisenberg spin chain (XXZ, $\Delta = 1$) using exact diagonalization for systems **N = 6–18**. By constructing a graph Laplacian from the ground-state **mutual-information matrix**, we demonstrate that smooth spatial geometry emerges from pure entanglement, featuring:
-*   A constant zero mode corresponding to a Laplace–Beltrami operator.
-*   Emergent Neumann boundary conditions under OBC.
-*   A robust, finite-size mass gap that distinguishes between OBC ($b_{\text{OBC}} \approx 0.145$) and PBC ($b_{\text{PBC}} \approx 1.170$).
-*   Criticality-dependent structure ($|\Delta| \le 1$).
+---
+
+## 🔍 Conceptual Overview
+
+The framework treats the ground state of an isotropic antiferromagnetic Heisenberg spin chain as a pure correlation metric. It constructs an information-derived graph Laplacian to analyze its spectral and structural properties across various system sizes ($N = 6$ to $18$), topologies (Open vs. Periodic), and phase boundaries ($\Delta$).
+
+## 🧠 Key Scientific Findings
+
+*   **Emergent Boundaries:** The pipeline reproduces Neumann boundary conditions natively from entanglement data (OBC) and identifies the expected constant zero mode.
+*   **Bulk Mass Scale:** Finite-size scaling reveals a non-zero intercept in the first non-zero mode,, indicating a genuine bulk mass scale. This effect is significantly magnified under Periodic Boundary Conditions (PBC), pointing to long-range entanglement monogamy constraints.
+*   **Criticality Dependence:** Smooth, CFT-matching geometries arise in the critical phase ($\Delta \le 1$), while geometric structures collapse in the gapped phase ($\Delta > 1$).
+
+## ⚙️ The Computational Pipeline
+
+The codebase implements a 5-step process:
+1.  **Exact Diagonalization (ED):** Generates $|\psi_0\rangle$ (up to $N=18$).
+2.  **Quantum Information Processing:** Calculates $I(i, j)$ via reduced density matrices.
+3.  **Matrix Normalization:** Normalizes $I(i, j)$ to build the adjacency matrix.
+4.  **Spectral Decomposition:** Solves $L = D - A$ for eigenvalues and modes.
+5.  **Statistical Validation:** Employs AICc and bootstrap resampling.
 
 ## 📁 Repository Structure
-*   `main.pdf/tex` : The final paper.
-*   `code/` : Python implementation and validation (`testing.py`).
-*   `output/` : Generated plots.
 
-## ▶ Running the Pipeline
-Run `python testing.py` to reproduce the figures.
+*   `main.pdf` / `main.tex` : Manuscript and LaTeX source.
+*   `code/testing.py` : Production code (ED, solvers, stats).
+*   `output/` : Figures 1-12 in high-res (.png/.pdf).
+
+
