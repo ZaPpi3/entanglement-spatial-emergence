@@ -18,4 +18,4 @@ We study the isotropic antiferromagnetic Heisenberg spin chain (XXZ, $\Delta = 1
 *   `output/` : Generated plots.
 
 ## ▶ Running the Pipeline
-Run `python main.py` to reproduce the figures.
+Run `python testing.py` to reproduce the figures.
