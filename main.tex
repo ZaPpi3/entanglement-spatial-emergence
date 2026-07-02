@@ -26,11 +26,19 @@ with Neumann boundary conditions.
 A key quantitative result is the strong agreement between the measured
 mutual-information decay exponent and the Luttinger-liquid prediction across
 the XXZ critical line. The lowest Laplacian eigenvalue $\lambda_1$ displays a
-statistically significant finite-size intercept under open boundary conditions
-(OBC), and this intercept increases under periodic boundary conditions (PBC).
-This behaviour demonstrates that the mass scale is a genuine bulk property of
-the entanglement geometry rather than a boundary artefact. The numerical
-pipeline developed here provides a concrete validation tool for
+nonzero finite-size intercept under open boundary conditions (OBC) that
+persists, and grows, under periodic boundary conditions (PBC), ruling out a
+simple boundary-artefact origin. However, we show that this intercept is not
+a fixed physical scale: its magnitude varies by an order of magnitude under
+different (equally natural) choices of adjacency normalization, and its value
+is substantially reduced---or reversed in sign under PBC---once finite-size
+models incorporating the logarithmic corrections expected at a critical point
+are included and compared via AICc. We report these sensitivities explicitly
+rather than treating the naive $a/N^2+b$ fit as final, and argue that the
+existence of a nonzero intercept is on reasonably firm footing while its
+interpretation as a ``genuine bulk mass scale'' requires larger system sizes
+(e.g.\ via DMRG) to settle. The numerical pipeline developed here, including
+these robustness diagnostics, provides a concrete validation tool for
 information-theoretic approaches to emergent geometry.
 \end{abstract}
 
@@ -116,7 +124,12 @@ For $N=12$, fitting the lowest eight nonzero eigenvalues $\lambda_k$ as a
 function of mode index $k$ yields $R^2\approx 0.95$ for both linear and
 quadratic fits, but AICc favours the linear model. Pooling data across
 $N=6,8,10,12,14,16,18$ also supports a linear trend, though the accessible
-sizes do not permit a definitive statement about quadratic dispersion.
+sizes do not permit a definitive statement about quadratic dispersion. We
+note that a continuum Laplace--Beltrami operator with Neumann boundary
+conditions has $\lambda_k\propto k^2$ at low $k$, so a linear-favoured fit is
+in tension with the Laplace--Beltrami identification we explore below; we
+flag this explicitly rather than treating the two results as consistent, and
+return to it in the Discussion.
 
 \subsection{Finite-size scaling of $\lambda_1$ under OBC}
 
@@ -128,7 +141,9 @@ gives
 \begin{equation}
 \lambda_1(N) = (8.87\pm0.83)\frac{1}{N^2} + (0.1454\pm0.0109),
 \end{equation}
-a $13.3\sigma$ nonzero intercept.
+i.e.\ a nonzero intercept at the level of the fit uncertainty (naively
+$13.3\sigma$; see Sec.~\ref{sec:robustness} for why this significance should
+not be taken at face value).
 
 \begin{figure}[t]
 \centering
@@ -137,7 +152,13 @@ a $13.3\sigma$ nonzero intercept.
 boundaries).}
 \end{figure}
 
-A bootstrap over system sizes yields $b=0.1396\pm0.0148$ ($9.4\sigma$).
+A resampling of the seven system sizes with replacement (``bootstrap over
+$N$'') yields $b=0.1396\pm0.0148$. We caution that, because the underlying
+$\lambda_1(N)$ values are deterministic outputs of exact diagonalization
+rather than independent noisy measurements, this procedure quantifies
+sensitivity to individual system sizes rather than a genuine sampling
+uncertainty, and the resulting ``$9.4\sigma$'' should be read in that light
+(Sec.~\ref{sec:robustness}).
 
 \begin{figure}[t]
 \centering
@@ -198,7 +219,8 @@ boundary operators are absent. Fitting the lowest eigenvalue yields
 \lambda_1(N)
 = \frac{52.52\pm5.83}{N^2} + (1.170\pm0.077),
 \end{equation}
-a $15.2\sigma$ nonzero intercept.
+a nonzero intercept that is larger, in this normalization, than its OBC
+counterpart (naively $15.2\sigma$; again see Sec.~\ref{sec:robustness}).
 
 \begin{figure}[t]
 \centering
@@ -262,38 +284,171 @@ periodic ring Laplacian.}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Robustness of the finite-size intercept}
+\label{sec:robustness}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The intercept $b$ reported above is the single most consequential number in
+this paper, so we subject it to two additional checks that were not part of
+the original pipeline: sensitivity to the adjacency normalization, and
+sensitivity to the assumed finite-size functional form.
+
+\emph{Normalization.} The adjacency matrix $A_{ij}=I(i,j)/\max_{k\ell}I(k,\ell)$
+is one of several equally defensible choices. Repeating the $a/N^2+b$ fit with
+$A_{ij}=I(i,j)/\langle I\rangle$ (mean normalization) and with the raw,
+unnormalized $I(i,j)$ gives:
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline\hline
+normalization & max & mean & none \\
+\hline
+$b_{\mathrm{OBC}}$ & 0.145 & 1.800 & 0.137 \\
+$b_{\mathrm{PBC}}$ & 1.170 & 5.917 & 0.494 \\
+\hline\hline
+\end{tabular}
+\end{center}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{robustness_normalization_sensitivity_open.png}
+\caption{Fitted intercept $b$ under three choices of adjacency
+normalization (OBC). The intercept remains positive in every case, but its
+magnitude is not normalization-invariant.}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{robustness_normalization_sensitivity_periodic.png}
+\caption{Fitted intercept $b$ under three choices of adjacency
+normalization (PBC). As under OBC, the intercept stays positive but its
+size varies by roughly an order of magnitude.}
+\end{figure}
+
+The intercept is positive under every normalization tested, for both boundary
+conditions, which argues against it being a pure artefact of the specific
+$\max$-normalization choice. However, its \emph{magnitude} changes by roughly
+an order of magnitude across normalizations, so quoted values such as
+$b_{\mathrm{OBC}}\approx0.145$ should be understood as specific to the
+max-normalized construction, not as a normalization-independent physical
+constant.
+
+\emph{Finite-size functional form.} The $a/N^2+b$ ansatz omits the
+logarithmic finite-size corrections generically expected near a critical
+(Luttinger-liquid) point, of the same origin as the $\log N$ term in the
+critical entanglement entropy. We compare $a/N^2+b$ against models that
+include such a term, using AICc, for the max-normalized data:
+
+\begin{center}
+\begin{tabular}{lcc}
+\hline\hline
+model & AICc (OBC) & AICc (PBC) \\
+\hline
+$a/N^2+b$ & $-51.7$ & $-24.4$ \\
+$a\log N/N^2+b$ & $-58.7$ & $-30.0$ \\
+$a/N^2+c\log N/N^2+b$ & $\mathbf{-78.5}$ & $-49.4$ \\
+$a\log N/N+b$ & $-67.9$ & $\mathbf{-55.1}$ \\
+\hline\hline
+\end{tabular}
+\end{center}
+
+In both boundary conditions, AICc prefers a log-corrected model over the
+plain $a/N^2+b$ fit reported in the previous sections. Under the
+AICc-preferred model, the extracted intercept changes substantially: for
+OBC, $b$ drops from $0.145$ to $0.075$; for PBC, the preferred model
+($a\log N/N+b$) gives $b=-0.375$, i.e.\ the sign of the intercept reverses.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{robustness_log_correction_fits_open.png}
+\caption{The plain $a/N^2+b$ fit (dashed) versus a log-corrected fit
+(solid) for the same max-normalized OBC data. The extracted intercept $b$
+differs substantially between the two models.}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{robustness_log_correction_fits_periodic.png}
+\caption{As in the previous figure, but for PBC. Here the AICc-preferred
+model (not shown; see table above) is $a\log N/N+b$, under which the
+intercept changes sign.}
+\end{figure}
+
+We therefore do not treat the $13$--$15\sigma$ figures quoted above as a
+reliable measure of the significance of a physical mass scale: they measure
+the significance of a nonzero intercept \emph{within one particular and, by
+AICc, non-preferred finite-size ansatz}. A leave-one-out check (dropping each
+$N$ in turn and refitting $a/N^2+b$) shows the intercept moves by only
+$\sim$20--25\% of its central value, so the $a/N^2+b$ result is not being
+driven by any single system size; the dominant uncertainty is model-form
+uncertainty, not sampling noise. Distinguishing between these finite-size
+forms with confidence will require larger $N$ than exact diagonalization can
+reach, most plausibly via DMRG or MPS methods.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Discussion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Our numerical pipeline shows that a Laplacian-like operator constructed purely
-from ground-state mutual information exhibits many of the defining features of
-a continuum Laplace--Beltrami operator on a one-dimensional interval with
-Neumann boundary conditions. The extended-$N$ analysis of $\lambda_1$ reveals a
-statistically robust finite-size intercept under OBC. The decisive test is the
-behaviour under periodic boundaries: if the intercept were a boundary artefact,
-it would vanish under PBC. Instead, the intercept becomes larger and more
-statistically significant.
+from ground-state mutual information exhibits several of the defining
+features of a continuum Laplace--Beltrami operator on a one-dimensional
+interval with Neumann boundary conditions: a constant zero mode, suppressed
+boundary slopes in the low-lying modes, and reasonable agreement with an
+ideal discrete Neumann spectrum at low mode index. The mutual-information
+decay exponent also tracks the Luttinger-liquid prediction closely across the
+XXZ critical line under both boundary conditions. We note, however, that
+AICc favours a linear rather than quadratic dispersion $\lambda_k(k)$ (Sec.
+III.B), which is not what a continuum Laplace--Beltrami operator predicts;
+the Laplace--Beltrami identification should therefore be read as a
+qualitative, low-mode-index similarity rather than an established
+correspondence, pending larger $N$.
 
-The increase from $b_{\mathrm{OBC}}\approx 0.145$ to $b_{\mathrm{PBC}}\approx
-1.17$ reflects the redistribution of long-range entanglement monogamy
-constraints around a closed loop, thickening the effective information gap and
-enhancing the emergent mass scale. The MI-derived Laplacian therefore describes
-a genuinely massive one-dimensional geometry whose mass gap persists in the
-thermodynamic limit and is robust to changes in topology.
+The extended-$N$ analysis of $\lambda_1$ reveals a nonzero finite-size
+intercept under OBC that does not vanish, and in fact grows, under PBC---this
+rules out the intercept being a simple boundary artefact, since a pure
+boundary effect would be expected to disappear once the boundary is removed.
+This is a genuine and, we think, interesting feature of the MI-derived
+Laplacian.
+
+However, as detailed in Sec.~\ref{sec:robustness}, we do not consider the
+\emph{size} of the intercept, or its interpretation as a physical mass gap, to
+be established. The magnitude of $b$ varies by an order of magnitude across
+otherwise-reasonable normalization choices, and an AICc-preferred finite-size
+model that includes the logarithmic corrections expected at a critical point
+substantially reduces the OBC intercept and reverses the sign of the PBC
+intercept. Both of these are choices we made in the original analysis without
+testing alternatives, and both turn out to matter more than the
+system-size range accessible to exact diagonalization can resolve. We
+therefore present the increase from $b_{\mathrm{OBC}}\approx 0.145$ to
+$b_{\mathrm{PBC}}\approx 1.17$ (under max-normalization and the $a/N^2+b$
+ansatz) as a suggestive but not yet decisive piece of evidence, rather than
+as a demonstration of ``a genuinely massive one-dimensional geometry.'' What
+the data support more confidently is the qualitative claim that the
+intercept is not purely a boundary effect; what they do not yet establish is
+its sign-definite existence, size, or physical interpretation once
+methodological alternatives are taken into account.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We have provided a comprehensive, statistically controlled numerical
-demonstration that differential-geometric structure can emerge from quantum
-entanglement alone in a simple spin chain. The persistence and enhancement of
-the $\lambda_1$ intercept under periodic boundaries shows that the emergent
-geometry contains a genuine bulk mass scale. The pipeline developed here offers
-a concrete validation tool for information-theoretic approaches to emergent
-geometry and suggests several directions for follow-up, including extending to
-larger $N$ using DMRG or MPS, applying the MI-to-Laplacian construction to
-higher-dimensional systems, and exploring connections to holographic and
+We have provided a numerical demonstration that differential-geometric
+structure can partially emerge from quantum entanglement alone in a simple
+spin chain, together with a broad suite of diagnostics for assessing that
+structure. The persistence of a nonzero $\lambda_1$ intercept under both open
+and periodic boundaries argues against a purely boundary-artefact
+explanation, but our own robustness checks---normalization sensitivity and
+AICc-based comparison against log-corrected finite-size models---show that
+neither the magnitude nor, under PBC, even the sign of that intercept is
+settled at the system sizes accessible to exact diagonalization. We view this
+as a limitation to be resolved rather than a result to be asserted: the
+pipeline developed here, including the robustness diagnostics of
+Sec.~\ref{sec:robustness}, offers a concrete validation tool for
+information-theoretic approaches to emergent geometry, and the natural next
+step is to extend it to larger $N$ using DMRG or MPS methods, where the
+competing finite-size models could be distinguished with confidence. Further
+directions include applying the MI-to-Laplacian construction to
+higher-dimensional systems and exploring connections to holographic and
 tensor-network models of emergent spacetime.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -311,6 +466,10 @@ $N=6,8,10,12,14,16,18$ at selected $\Delta$.
 \item Statistical analysis: AICc model selection, finite-size scaling,
 bootstrap analysis, synthetic benchmarking, boundary diagnostics,
 Luttinger-parameter sweep, and MI-decay exponent extraction.
+\item Robustness diagnostics: repeating the finite-size fit under
+alternative adjacency normalizations (mean, unnormalized) and under
+finite-size models with logarithmic corrections, compared via AICc
+(Sec.~\ref{sec:robustness}).
 \end{enumerate}
 
 \end{document}
